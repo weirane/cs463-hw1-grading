@@ -3,7 +3,7 @@ from gradescope_utils.autograder_utils.decorators import weight
 from submission import collatz
 
 
-class CollatzTests(unittest.TestCase):
+class TestCollatz(unittest.TestCase):
     @weight(1.0)
     def test_collatz_1(self):
         self.assertEqual(collatz(1), [1])
