@@ -1,0 +1,5 @@
+#!/bin/sh
+
+rm -r auto-grader.zip
+zip -r auto-grader.zip -j run_autograder setup.sh requirements.txt run_tests.py
+zip -r auto-grader.zip tests

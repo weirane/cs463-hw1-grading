@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+cd /autograder/submission
+nfiles=$(find . -name '*.py' | wc -l)
+if [ "$nfiles" != 1 ]; then
+    echo >&2 'multiple python files'
+    exit 1
+fi
+file=$(find . -name '*.py')
+
+cp "$file" /autograder/source/submission.py
+
+cd /autograder/source
+python3 run_tests.py
