@@ -12,6 +12,7 @@ def processor(data):
         name = t['name']
         t['name'] = name[:name.find(' (')]
 
+    # process late submissions
     print('Autograder raw score:', data['score'])
     with open('/autograder/submission_metadata.json') as f:
         meta = json.loads(f.read())
