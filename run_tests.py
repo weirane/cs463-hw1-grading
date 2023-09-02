@@ -1,7 +1,8 @@
 import json
+import sys
 import unittest
 
-from datetime import timedelta
+from datetime import timedelta, datetime
 from dateutil import parser
 from gradescope_utils.autograder_utils.json_test_runner import JSONTestRunner
 
@@ -14,10 +15,15 @@ def processor(data):
 
     # process late submissions
     print('Autograder raw score:', data['score'])
-    with open('/autograder/submission_metadata.json') as f:
-        meta = json.loads(f.read())
-    submitted = parser.parse(meta['created_at'])
-    due = parser.parse(meta['assignment']['due_date'])
+    filename = sys.argv[1]
+    submit_time = filename[filename.find('_attempt_') + 9:].split('_')[0]
+    submitted = datetime.strptime(submit_time, '%Y-%m-%d-%H-%M-%S')
+    due = datetime(2023, 8, 31, 17, 0, 0)
+    # with open('/autograder/submission_metadata.json') as f:
+    #     meta = json.loads(f.read())
+    # submitted = parser.parse(meta['created_at'])
+    # due = parser.parse(meta['assignment']['due_date'])
+    print('submitted', submitted)
     late = submitted - due
     if late > timedelta(hours=48, minutes=5):
         score = 0
@@ -32,6 +38,7 @@ def processor(data):
         score = data['score']
 
     if score < data['score']:
+        data['score'] = score
         print('Adjusted late score:', score)
 
 

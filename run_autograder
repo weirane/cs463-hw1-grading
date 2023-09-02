@@ -13,4 +13,4 @@ file=$(find . -name '*.py')
 cp "$file" /autograder/source/submission.py
 
 cd /autograder/source
-python3 run_tests.py
+python3 run_tests.py "$file"
